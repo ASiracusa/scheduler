@@ -6,17 +6,18 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <span className="badge badge-primary">Something</span>
-          <table class="table table-dark">
+        <body className="page-setup">
+          <nav className="sidebar-shell">Contents</nav>
+
+          <table className="calendar">
             <tr>
               <th>Category 1</th>
               <th>Category 2</th>
               <th>Category 3</th>
             </tr>
             <tr>
-              <td>Thing 1</td>
-              <td>Thing 2</td>
+              <td className="red-box">Thing 1</td>
+              <td className="red-box">Thing 2</td>
               <td>Thing 3</td>
             </tr>
             <tr>
@@ -25,7 +26,7 @@ class App extends Component {
               <td>Thing 6</td>
             </tr>
           </table>
-        </div>
+        </body>
       </React.Fragment>
     );
   }
