@@ -25,9 +25,16 @@ code {
 
 .calendar {
   width: 80%;
-  height: 100%;
+  height: 90%;
   padding: 5px;
   overflow: hidden;
+}
+
+.calendar-header {
+  width: 100%;
+  height: 10%;
+  font-size: 40px;
+  text-align: center;
 }
 
 .sidebar-shell {
@@ -62,4 +69,15 @@ code {
   padding: 5px;
   margin: 5px;
   text-align: left;
+}
+
+.month-button {
+  height: 6%;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #6767da;
+  font-size: 11px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
 }
