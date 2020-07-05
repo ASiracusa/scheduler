@@ -17,11 +17,15 @@ const MONTHS = [
 
 class Calendar extends Component {
   state = {
-    monthIndex: 7,
+    month: 0,
+    year: 0,
   };
 
   constructor() {
     super();
+    var d = new Date();
+    this.state.month = d.getMonth();
+    this.state.year = d.getFullYear();
   }
 
   render() {
@@ -45,15 +49,19 @@ class Calendar extends Component {
           >
             Next Month
           </button>
-          <div className="calendar-header">{MONTHS[this.state.monthIndex]}</div>
+          <div className="calendar-header">
+            {MONTHS[this.state.month]} {this.state.year}
+          </div>
         </div>
       </React.Fragment>
     );
   }
 
   handleMonthChange = (directionMod) => {
-    const monthIndex = (this.state.monthIndex + directionMod + 12) % 12;
-    this.setState({ monthIndex });
+    const month = (this.state.month + directionMod + 12) % 12;
+    if (this.state.month + directionMod > 11) this.state.year++;
+    if (this.state.month + directionMod < 0) this.state.year--;
+    this.setState({ month, year: this.state.year });
   };
 }
 
