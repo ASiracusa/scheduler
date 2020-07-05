@@ -10,20 +10,51 @@ class App extends Component {
           <nav className="sidebar-shell">Contents</nav>
 
           <table className="calendar">
-            <tr>
-              <th>Category 1</th>
-              <th>Category 2</th>
-              <th>Category 3</th>
+            <tr className="week-cell">
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
             </tr>
-            <tr>
-              <td className="red-box">Thing 1</td>
-              <td className="red-box">Thing 2</td>
-              <td>Thing 3</td>
-            </tr>
-            <tr>
-              <td>Thing 4</td>
-              <td>Thing 5</td>
-              <td>Thing 6</td>
+            <tr className="week-cell">
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
+              <td className="day-cell">
+                <body className="day-bubble"></body>
+              </td>
             </tr>
           </table>
         </body>
