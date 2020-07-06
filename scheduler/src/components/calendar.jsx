@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DayBox from "./daybox";
 
 const MONTHS = [
   "January",
@@ -15,6 +16,8 @@ const MONTHS = [
   "December",
 ];
 
+const MONTHLENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 class Calendar extends Component {
   state = {
     date: null,
@@ -23,6 +26,7 @@ class Calendar extends Component {
   constructor() {
     super();
     this.state.date = new Date();
+    this.state.date.setDate(1);
   }
 
   render() {
@@ -50,6 +54,57 @@ class Calendar extends Component {
             {MONTHS[this.state.date.getMonth()]} {this.state.date.getFullYear()}
           </div>
         </div>
+
+        {this.renderCalendar()}
+
+        <table className="calendar">
+          <tr className="week-cell">
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+          </tr>
+          <tr className="week-cell">
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+            <td className="day-cell">
+              <body className="day-bubble"></body>
+            </td>
+          </tr>
+        </table>
       </React.Fragment>
     );
   }
@@ -63,6 +118,31 @@ class Calendar extends Component {
     if (this.state.date.getMonth() + directionMod < 0)
       this.state.date.setFullYear(this.state.date.getFullYear() - 1);
     this.setState({ date: this.state.date });
+  };
+
+  renderCalendar = () => {
+    var calendarContent = [];
+    for (
+      var day = 1 - this.state.date.getDay();
+      day < MONTHLENGTHS[this.state.date.getMonth()];
+      day += 7
+    ) {
+      var weekContent = [];
+      for (var i = 0; i < 7; i++) {
+        var real =
+          "day-bubble day-bubble-" +
+          (day + i > 0 && day + i <= MONTHLENGTHS[this.state.date.getMonth()]
+            ? "real"
+            : "fake");
+        weekContent.push(<td className={real}>{day + i}</td>);
+      }
+      calendarContent.push(
+        <tr className="week-cell">
+          <div>{weekContent}</div>
+        </tr>
+      );
+    }
+    return <table className="calendar">{calendarContent}</table>;
   };
 }
 
