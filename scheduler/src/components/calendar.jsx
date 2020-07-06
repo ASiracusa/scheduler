@@ -56,55 +56,6 @@ class Calendar extends Component {
         </div>
 
         {this.renderCalendar()}
-
-        <table className="calendar">
-          <tr className="week-cell">
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-          </tr>
-          <tr className="week-cell">
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-            <td className="day-cell">
-              <body className="day-bubble"></body>
-            </td>
-          </tr>
-        </table>
       </React.Fragment>
     );
   }
@@ -124,7 +75,7 @@ class Calendar extends Component {
     var calendarContent = [];
     for (
       var day = 1 - this.state.date.getDay();
-      day < MONTHLENGTHS[this.state.date.getMonth()];
+      day <= MONTHLENGTHS[this.state.date.getMonth()];
       day += 7
     ) {
       var weekContent = [];
@@ -134,15 +85,18 @@ class Calendar extends Component {
           (day + i > 0 && day + i <= MONTHLENGTHS[this.state.date.getMonth()]
             ? "real"
             : "fake");
-        weekContent.push(<td className={real}>{day + i}</td>);
+        weekContent.push(
+          <td className="day-cell">
+            <div className={real}>{day + i}</div>
+          </td>
+        );
       }
-      calendarContent.push(
-        <tr className="week-cell">
-          <div>{weekContent}</div>
-        </tr>
-      );
+      calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
     }
-    return <table className="calendar">{calendarContent}</table>;
+    calendarContent.push(<tr></tr>);
+    return (
+      <table className="calendar overflow-y:scroll">{calendarContent}</table>
+    );
   };
 }
 
