@@ -61,13 +61,15 @@ class Calendar extends Component {
   }
 
   handleMonthChange = (directionMod) => {
-    this.state.date.setMonth(
-      (this.state.date.getMonth() + directionMod + 12) % 12
-    );
     if (this.state.date.getMonth() + directionMod > 11)
       this.state.date.setFullYear(this.state.date.getFullYear() + 1);
     if (this.state.date.getMonth() + directionMod < 0)
       this.state.date.setFullYear(this.state.date.getFullYear() - 1);
+
+    this.state.date.setMonth(
+      (this.state.date.getMonth() + directionMod + 12) % 12
+    );
+
     this.setState({ date: this.state.date });
   };
 
