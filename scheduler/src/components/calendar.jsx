@@ -82,7 +82,15 @@ class Calendar extends Component {
     this.setState({ date: this.state.date });
 
     var calendarBody = document.getElementById("calendar-body");
-    calendarBody.scrollBy(0, vh * 4 * 0.25);
+
+    var topmostMonth = this.getMonthfromMonth(
+      this.state.date,
+      directionMod < 0 ? -1 : -2
+    );
+    calendarBody.scrollBy(
+      0,
+      -directionMod * vh * this.getWeeksEndedInMonth(topmostMonth) * 0.25
+    );
   };
 
   renderCalendar = () => {
@@ -130,9 +138,10 @@ class Calendar extends Component {
             day = 1;
             if (currMonthMod === MONTH_MOD_END + 1) break;
           }
-          weekContent.push(
-            <DayBox isCurrentMonth="day-bubble day-bubble-real" day={day} />
-          );
+          var centralMonth =
+            "day-bubble day-bubble-" +
+            (currMonthMod === MONTH_MOD_END / 2 ? "real" : "fake");
+          weekContent.push(<DayBox isCurrentMonth={centralMonth} day={day} />);
         }
         day++;
       }
@@ -141,11 +150,7 @@ class Calendar extends Component {
 
     return (
       <div className="calendar-body" id="calendar-body">
-        <table
-          className="calendar overflow-y:scroll"
-          cellspacing="0"
-          cellpadding="0"
-        >
+        <table className="calendar overflow-y:scroll" cellPadding="0">
           {calendarContent}
         </table>
       </div>
@@ -167,6 +172,20 @@ class Calendar extends Component {
     newDate.setMonth((date.getMonth() + direction + 12) % 12);
 
     return newDate;
+  };
+
+  getWeeksEndedInMonth = (date) => {
+    console.log(date.getMonth());
+
+    date.setDate(1);
+    var daysInMonth =
+      date.getMonth() === 1 && this.isLeapYear(date.getFullYear())
+        ? 29
+        : MONTHLENGTHS[date.getMonth()];
+
+    var w = Math.floor((date.getDay() + daysInMonth) / 7);
+    console.log(date.getDay() + " " + daysInMonth + " = " + w);
+    return w;
   };
 }
 
