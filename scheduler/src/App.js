@@ -7,10 +7,10 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <body className="page-setup">
+        <div className="page-setup">
           <nav className="sidebar-shell">Contents</nav>
           <Calendar />
-        </body>
+        </div>
       </React.Fragment>
     );
   }

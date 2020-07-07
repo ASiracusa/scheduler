@@ -27,15 +27,24 @@ const vh = Math.max(
   window.innerHeight || 0
 );
 
+const options = {
+  threshold: 0,
+};
+
 class Calendar extends Component {
   state = {
     date: null,
+    observer: null,
   };
 
   constructor() {
     super();
     this.state.date = new Date();
     this.state.date.setDate(1);
+  }
+
+  componentDidMount() {
+    this.updateWeekObserver();
   }
 
   render() {
@@ -80,6 +89,8 @@ class Calendar extends Component {
     );
 
     this.setState({ date: this.state.date });
+
+    this.updateWeekObserver();
 
     var calendarBody = document.getElementById("calendar-body");
 
@@ -151,7 +162,7 @@ class Calendar extends Component {
     return (
       <div className="calendar-body" id="calendar-body">
         <table className="calendar overflow-y:scroll" cellPadding="0">
-          {calendarContent}
+          <tbody>{calendarContent}</tbody>
         </table>
       </div>
     );
@@ -175,8 +186,6 @@ class Calendar extends Component {
   };
 
   getWeeksEndedInMonth = (date) => {
-    console.log(date.getMonth());
-
     date.setDate(1);
     var daysInMonth =
       date.getMonth() === 1 && this.isLeapYear(date.getFullYear())
@@ -184,8 +193,28 @@ class Calendar extends Component {
         : MONTHLENGTHS[date.getMonth()];
 
     var w = Math.floor((date.getDay() + daysInMonth) / 7);
-    console.log(date.getDay() + " " + daysInMonth + " = " + w);
     return w;
+  };
+
+  updateWeekObserver = () => {
+    if (this.state.observer !== null) this.state.observer.disconnect();
+
+    const weeks = document.getElementsByClassName("week-cell");
+    console.log(weeks.length);
+
+    this.state.observer = new IntersectionObserver(function (
+      entries,
+      observer
+    ) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) console.log(entry);
+      });
+    },
+    options);
+
+    for (let week of weeks) {
+      this.state.observer.observe(week);
+    }
   };
 }
 
