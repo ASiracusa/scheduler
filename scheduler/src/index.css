@@ -54,6 +54,7 @@ code {
 
 .calendar {
   width: 100%;
+  border: none;
 }
 
 .calendar-body::-webkit-scrollbar {
@@ -77,10 +78,11 @@ code {
 
 .day-bubble {
   border-radius: 5px;
-  height: 25vh;
+  height: 24vh;
   color: #ffffff;
   font-size: 11px;
   padding: 5px;
+  margin: 0.5vh;
   text-align: left;
   background-color: #555555;
   transition: background-color 50ms;

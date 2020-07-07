@@ -18,6 +18,15 @@ const MONTHS = [
 
 const MONTHLENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+const vw = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0
+);
+const vh = Math.max(
+  document.documentElement.clientHeight || 0,
+  window.innerHeight || 0
+);
+
 class Calendar extends Component {
   state = {
     date: null,
@@ -71,6 +80,9 @@ class Calendar extends Component {
     );
 
     this.setState({ date: this.state.date });
+
+    var calendarBody = document.getElementById("calendar-body");
+    calendarBody.scrollBy(0, vh * 4 * 0.25);
   };
 
   renderCalendar = () => {
@@ -128,8 +140,14 @@ class Calendar extends Component {
     }
 
     return (
-      <div className="calendar-body">
-        <table className="calendar overflow-y:scroll">{calendarContent}</table>
+      <div className="calendar-body" id="calendar-body">
+        <table
+          className="calendar overflow-y:scroll"
+          cellspacing="0"
+          cellpadding="0"
+        >
+          {calendarContent}
+        </table>
       </div>
     );
   };
