@@ -7,7 +7,7 @@ class DayBox extends Component {
     return (
       <React.Fragment>
         <td className="day-cell">
-          <body className="day-bubble">{this.props.day}</body>
+          <body className={this.props.isCurrentMonth}>{this.props.day}</body>
         </td>
       </React.Fragment>
     );

@@ -55,7 +55,7 @@ class Calendar extends Component {
           </div>
         </div>
 
-        {this.renderCalendar()}
+        {this.renderInfiniteCalendar()}
       </React.Fragment>
     );
   }
@@ -87,18 +87,68 @@ class Calendar extends Component {
           (day + i > 0 && day + i <= MONTHLENGTHS[this.state.date.getMonth()]
             ? "real"
             : "fake");
-        weekContent.push(
-          <td className="day-cell">
-            <div className={real}>{day + i}</div>
-          </td>
-        );
+        weekContent.push(<DayBox isCurrentMonth={real} day={day + i} />);
       }
       calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
     }
     calendarContent.push(<tr></tr>);
     return (
-      <table className="calendar overflow-y:scroll">{calendarContent}</table>
+      <div className="calendar-body">
+        <table className="calendar overflow-y:scroll">{calendarContent}</table>
+      </div>
     );
+  };
+
+  renderInfiniteCalendar = () => {
+    const MONTH_MOD_END = 2;
+
+    var currMonthMod = 0;
+    var date = this.getMonthfromMonth(this.state.date, -1);
+    var day = 1 - date.getDay();
+
+    var calendarContent = [];
+    while (currMonthMod <= MONTH_MOD_END) {
+      var weekContent = [];
+      for (var i = 0; i < 7; i++) {
+        if (day <= 0 || currMonthMod > MONTH_MOD_END) {
+          weekContent.push(<td></td>);
+        } else {
+          if (day > MONTHLENGTHS[(date.getMonth() + currMonthMod + 12) % 12]) {
+            currMonthMod++;
+            day = 1;
+            if (currMonthMod === MONTH_MOD_END + 1) break;
+          }
+          weekContent.push(
+            <DayBox isCurrentMonth="day-bubble day-bubble-real" day={day} />
+          );
+        }
+        day++;
+      }
+      calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
+    }
+
+    return (
+      <div className="calendar-body">
+        <table className="calendar overflow-y:scroll">{calendarContent}</table>
+      </div>
+    );
+  };
+
+  isLeapYear = (year) => {
+    return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+  };
+
+  getMonthfromMonth = (date, direction) => {
+    var newDate = new Date(date.getFullYear(), date.getMonth());
+
+    if (date.getMonth() + direction > 11)
+      newDate.setFullYear(date.getFullYear() + 1);
+    if (date.getMonth() + direction < 0)
+      newDate.setFullYear(date.getFullYear() - 1);
+
+    newDate.setMonth((date.getMonth() + direction + 12) % 12);
+
+    return newDate;
   };
 }
 

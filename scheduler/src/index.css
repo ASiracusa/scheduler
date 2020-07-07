@@ -45,13 +45,31 @@ code {
   color: #ffffff;
 }
 
-.calendar {
+.calendar-body {
   width: 80%;
   height: 90%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.calendar {
+  width: 100%;
+}
+
+.calendar-body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.calendar-body::-webkit-scrollbar-track {
+  background: #2c2c2c;
+}
+
+.calendar-body::-webkit-scrollbar-thumb {
+  background: #646464;
 }
 
 .week-cell {
-  height: 17%;
+  height: 25vh;
 }
 
 .day-cell {
@@ -59,17 +77,17 @@ code {
 
 .day-bubble {
   border-radius: 5px;
-  height: 100%;
+  height: 25vh;
   color: #ffffff;
   font-size: 11px;
   padding: 5px;
   text-align: left;
   background-color: #555555;
-  transition: background-color 200ms;
+  transition: background-color 50ms;
 }
 
 .day-bubble:hover {
-  background-color: #999999;
+  background-color: #777777;
 }
 
 .day-bubble-real {
