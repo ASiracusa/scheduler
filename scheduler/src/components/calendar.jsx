@@ -239,20 +239,14 @@ class Calendar extends Component {
       observer
     ) {
       entries.forEach((entry) => {
-        console.log("iteration - " + calendarObject.state.primaryMonth);
         if (entry.isIntersecting) {
-          console.log("intersect");
-          if (
-            parseInt(entry.target.getAttribute("primarymonth")) !==
-              calendarObject.state.primaryMonth &&
-            calendarObject.state.readyToChange
-          ) {
-            console.log(
-              "diffmonth - " +
-                parseInt(entry.target.getAttribute("primarymonth"))
-            );
-            console.log(entry.target);
-            calendarObject.handleMonthChange(1);
+          const monthDiff =
+            calendarObject.state.primaryMonth -
+            parseInt(entry.target.getAttribute("primarymonth"));
+          if (monthDiff !== 0) {
+            if (monthDiff === -1 || monthDiff === 11)
+              calendarObject.handleMonthChange(1);
+            else calendarObject.handleMonthChange(-1);
           }
         }
       });
