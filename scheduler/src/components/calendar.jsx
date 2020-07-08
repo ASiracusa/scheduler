@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DayBox from "./daybox";
+import WeekBox from "./weekbox";
 
 const MONTHS = [
   "January",
@@ -28,22 +29,37 @@ const vh = Math.max(
 );
 
 const options = {
-  threshold: 0,
+  threshold: 1,
+  rootMargin: "-30% 0% -30% 0%",
 };
+
+const weakMap = new WeakMap();
+var keyIndex = 0;
 
 class Calendar extends Component {
   state = {
     date: null,
     observer: null,
+    primaryMonth: null,
+    readyToChange: false,
   };
 
   constructor() {
     super();
     this.state.date = new Date();
     this.state.date.setDate(1);
+    this.state.primaryMonth = this.state.date.getMonth();
   }
 
   componentDidMount() {
+    var calendarBody = document.getElementById("calendar-body");
+
+    var topmostMonth = this.getMonthfromMonth(this.state.date, -1);
+    calendarBody.scrollBy(
+      0,
+      vh * this.getWeeksEndedInMonth(topmostMonth) * 0.25
+    );
+
     this.updateWeekObserver();
   }
 
@@ -79,6 +95,9 @@ class Calendar extends Component {
   }
 
   handleMonthChange = (directionMod) => {
+    this.state.readyToChange = false;
+    this.state.observer.disconnect();
+
     if (this.state.date.getMonth() + directionMod > 11)
       this.state.date.setFullYear(this.state.date.getFullYear() + 1);
     if (this.state.date.getMonth() + directionMod < 0)
@@ -87,10 +106,7 @@ class Calendar extends Component {
     this.state.date.setMonth(
       (this.state.date.getMonth() + directionMod + 12) % 12
     );
-
-    this.setState({ date: this.state.date });
-
-    this.updateWeekObserver();
+    const primaryMonth = this.state.date.getMonth();
 
     var calendarBody = document.getElementById("calendar-body");
 
@@ -102,6 +118,10 @@ class Calendar extends Component {
       0,
       -directionMod * vh * this.getWeeksEndedInMonth(topmostMonth) * 0.25
     );
+
+    this.setState({ date: this.state.date, primaryMonth: primaryMonth });
+
+    this.updateWeekObserver();
   };
 
   renderCalendar = () => {
@@ -156,7 +176,17 @@ class Calendar extends Component {
         }
         day++;
       }
-      calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
+      //calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
+      keyIndex++;
+      const k = keyIndex;
+      calendarContent.push(
+        <WeekBox
+          //key={weakMap.get(this) + " " + k}
+          className="week"
+          primaryMonth={(date.getMonth() + currMonthMod + 12) % 12}
+          weekContent={weekContent}
+        />
+      );
     }
 
     return (
@@ -199,22 +229,44 @@ class Calendar extends Component {
   updateWeekObserver = () => {
     if (this.state.observer !== null) this.state.observer.disconnect();
 
-    const weeks = document.getElementsByClassName("week-cell");
-    console.log(weeks.length);
+    const weeks = document.querySelectorAll(".week-cell");
+    console.log(weeks);
+
+    const calendarObject = this;
 
     this.state.observer = new IntersectionObserver(function (
       entries,
       observer
     ) {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) console.log(entry);
+        console.log("iteration - " + calendarObject.state.primaryMonth);
+        if (entry.isIntersecting) {
+          console.log("intersect");
+          if (
+            parseInt(entry.target.getAttribute("primarymonth")) !==
+              calendarObject.state.primaryMonth &&
+            calendarObject.state.readyToChange
+          ) {
+            console.log(
+              "diffmonth - " +
+                parseInt(entry.target.getAttribute("primarymonth"))
+            );
+            console.log(entry.target);
+            calendarObject.handleMonthChange(1);
+          }
+        }
       });
     },
     options);
+    console.log("observers");
+
+    this.setState({ observer: this.state.observer });
 
     for (let week of weeks) {
       this.state.observer.observe(week);
     }
+
+    this.state.readyToChange = true;
   };
 }
 
