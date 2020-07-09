@@ -17,6 +17,12 @@ const MONTHS = [
   "December",
 ];
 
+const MONTHCLASSES = [
+  "day-bubble-lastmonth",
+  "day-bubble-currmonth",
+  "day-bubble-nextmonth",
+];
+
 const MONTHLENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const vw = Math.max(
@@ -33,15 +39,15 @@ const options = {
   rootMargin: "-30% 0% -30% 0%",
 };
 
-const weakMap = new WeakMap();
-var keyIndex = 0;
+let root = document.documentElement;
 
 class Calendar extends Component {
   state = {
     date: null,
     observer: null,
     primaryMonth: null,
-    readyToChange: false,
+    monthDirection: 0,
+    monthChanged: false,
   };
 
   constructor() {
@@ -60,10 +66,44 @@ class Calendar extends Component {
       vh * this.getWeeksEndedInMonth(topmostMonth) * 0.25
     );
 
+    const currmonth = document.querySelectorAll(".day-bubble-currmonth");
+    currmonth.forEach((oldday) => {
+      console.log(oldday);
+
+      oldday.classList.add("day-bubble-real");
+    });
+
     this.updateWeekObserver();
   }
 
+  componentDidUpdate() {
+    if (this.state.monthChanged) {
+      console.log("SETUP  " + new Date().getTime());
+
+      root.style.setProperty("--day-anim-speed", "500ms");
+
+      /*
+      const prevmonth = document.querySelectorAll(
+        this.state.monthDirection > 0
+          ? ".day-bubble-lastmonth"
+          : ".day-bubble-nextmonth"
+      );
+      prevmonth.forEach((oldday) => {
+        oldday.classList.remove("day-bubble-real");
+      });
+
+      const currmonth = document.querySelectorAll(".day-bubble-currmonth");
+      currmonth.forEach((oldday) => {
+        oldday.classList.add("day-bubble-real");
+      });
+      */
+
+      this.setState({ monthChanged: false, monthDirection: 0 });
+    }
+  }
+
   render() {
+    console.log("RENDER " + new Date().getTime());
     return (
       <React.Fragment>
         <div>
@@ -95,7 +135,6 @@ class Calendar extends Component {
   }
 
   handleMonthChange = (directionMod) => {
-    this.state.readyToChange = false;
     this.state.observer.disconnect();
 
     if (this.state.date.getMonth() + directionMod > 11)
@@ -121,33 +160,37 @@ class Calendar extends Component {
 
     this.setState({ date: this.state.date, primaryMonth: primaryMonth });
 
-    this.updateWeekObserver();
-  };
+    root.style.setProperty("--day-anim-speed", "0ms");
 
-  renderCalendar = () => {
-    var calendarContent = [];
-    for (
-      var day = 1 - this.state.date.getDay();
-      day <= MONTHLENGTHS[this.state.date.getMonth()];
-      day += 7
-    ) {
-      var weekContent = [];
-      for (var i = 0; i < 7; i++) {
-        var real =
-          "day-bubble day-bubble-" +
-          (day + i > 0 && day + i <= MONTHLENGTHS[this.state.date.getMonth()]
-            ? "real"
-            : "fake");
-        weekContent.push(<DayBox isCurrentMonth={real} day={day + i} />);
-      }
-      calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
-    }
-    calendarContent.push(<tr></tr>);
-    return (
-      <div className="calendar-body">
-        <table className="calendar overflow-y:scroll">{calendarContent}</table>
-      </div>
+    const allmonths = document.querySelectorAll(".day-bubble");
+    allmonths.forEach((oldday) => {
+      oldday.classList.remove("day-bubble-real");
+    });
+
+    const prevmonth = document.querySelectorAll(
+      directionMod > 0 ? ".day-bubble-lastmonth" : ".day-bubble-nextmonth"
     );
+    prevmonth.forEach((oldday) => {
+      oldday.classList.add("day-bubble-real");
+      void oldday.offsetWidth;
+    });
+
+    root.style.setProperty("--day-anim-speed", "500ms");
+
+    prevmonth.forEach((oldday) => {
+      oldday.classList.remove("day-bubble-real");
+    });
+
+    const currmonth = document.querySelectorAll(".day-bubble-currmonth");
+    currmonth.forEach((oldday) => {
+      oldday.classList.add("day-bubble-real");
+    });
+
+    console.log("RESET  " + new Date().getTime());
+
+    this.setState({ monthChanged: true, monthDirection: directionMod });
+
+    this.updateWeekObserver();
   };
 
   renderInfiniteCalendar = () => {
@@ -169,23 +212,26 @@ class Calendar extends Component {
             day = 1;
             if (currMonthMod === MONTH_MOD_END + 1) break;
           }
-          var centralMonth =
-            "day-bubble day-bubble-" +
-            (currMonthMod === MONTH_MOD_END / 2 ? "real" : "fake");
+          var centralMonth = "day-bubble " + MONTHCLASSES[currMonthMod];
           weekContent.push(<DayBox isCurrentMonth={centralMonth} day={day} />);
         }
         day++;
       }
-      //calendarContent.push(<tr className="week-cell">{weekContent}</tr>);
-      keyIndex++;
-      const k = keyIndex;
+
       calendarContent.push(
+        /*
         <WeekBox
-          //key={weakMap.get(this) + " " + k}
           className="week"
           primaryMonth={(date.getMonth() + currMonthMod + 12) % 12}
           weekContent={weekContent}
         />
+        */
+        <tr
+          primarymonth={(date.getMonth() + currMonthMod + 12) % 12}
+          className="week-cell"
+        >
+          {weekContent}
+        </tr>
       );
     }
 
@@ -234,10 +280,7 @@ class Calendar extends Component {
 
     const calendarObject = this;
 
-    this.state.observer = new IntersectionObserver(function (
-      entries,
-      observer
-    ) {
+    const observer = new IntersectionObserver(function (entries, observer) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const monthDiff =
@@ -250,17 +293,13 @@ class Calendar extends Component {
           }
         }
       });
-    },
-    options);
-    console.log("observers");
+    }, options);
 
-    this.setState({ observer: this.state.observer });
+    this.setState({ observer: observer });
 
     for (let week of weeks) {
-      this.state.observer.observe(week);
+      observer.observe(week);
     }
-
-    this.state.readyToChange = true;
   };
 }
 
