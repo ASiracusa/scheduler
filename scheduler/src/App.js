@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Calendar from "./components/calendar";
 import Calendar2 from "./components/calendar2";
+import Upcoming from "./components/upcoming";
 
 class App extends Component {
   state = {};
@@ -10,7 +11,7 @@ class App extends Component {
       <React.Fragment>
         <div className="page-setup">
           <nav className="sidebar-shell">Contents</nav>
-          <Calendar2 />
+          <Upcoming />
         </div>
       </React.Fragment>
     );
