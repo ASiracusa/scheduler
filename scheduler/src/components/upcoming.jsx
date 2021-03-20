@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const MONTHS = [
     "January",
@@ -44,6 +45,7 @@ class Upcoming extends Component {
     render() {
         return (
             <React.Fragment>
+                <DragDropContext>
                 <div className="calendar-header">:)</div>
                 <div className="upcoming-body">
                     <table className="upcoming" cellPadding="0">
@@ -52,6 +54,7 @@ class Upcoming extends Component {
                         </tbody>
                     </table>
                 </div>
+                </DragDropContext>
             </React.Fragment>
         );
     }
@@ -60,7 +63,7 @@ class Upcoming extends Component {
         var date = new Date();
         var beginning = new Date();
         beginning.setDate(1);
-        var day = Math.floor((date.getDate() - 1) / 7) * 7 - beginning.getDay() + 1;
+        var day = Math.floor((date.getDate() + beginning.getDay() - 1) / 7) * 7 - beginning.getDay() + 1;
         var monthContent = [];
     
         var daysInMonth =
@@ -75,7 +78,10 @@ class Upcoming extends Component {
             if (day <= 0) {
               weekContent.push(
                 <td className="day-cell">
-                    <div className="calendar-space">{day}</div>
+                    <div className="calendar-space">
+                        {day}
+                        <button className="add-card-button"> + </button>
+                    </div>
                 </td>);
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
@@ -84,7 +90,10 @@ class Upcoming extends Component {
               }
               weekContent.push(
                 <td className="day-cell">
-                    <div className={"calendar-space" + ((date.getDate() === day) ? " calendar-space-today" : "")}>{day}</div>
+                    <div className={"calendar-space" + ((date.getDate() === day) ? " calendar-space-today" : "")}>
+                        {day}
+                        <button className="add-card-button"> + </button>
+                    </div>
                 </td>);
             }
             day++;
