@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const MONTHS = [
     "January",
@@ -47,13 +47,13 @@ class Upcoming extends Component {
             <React.Fragment>
                 <DragDropContext>
                 <div className="calendar-header">:)</div>
-                <div className="upcoming-body">
-                    <table className="upcoming" cellPadding="0">
-                        <tbody>
-                            {this.state.schedule}
-                        </tbody>
-                    </table>
-                </div>
+                    <div className="upcoming-body">
+                        <table className="upcoming" cellPadding="0">
+                            <tbody>
+                                {this.state.schedule}
+                            </tbody>
+                        </table>
+                    </div>
                 </DragDropContext>
             </React.Fragment>
         );
@@ -93,6 +93,21 @@ class Upcoming extends Component {
                     <div className={"calendar-space" + ((date.getDate() === day) ? " calendar-space-today" : "")}>
                         {day}
                         <button className="add-card-button"> + </button>
+                        <Droppable droppableId="calendar-space-content">
+                            {(provided) => (
+                                <ul className="calendar-space-content" {...provided.droppableProps} ref={provided.innerRef}>
+                                    {[1, 2, 3].map((i) => (
+                                        <Draggable key={"" + day + "-" + i} draggableId={"" + day + "-" + i} index={i}>
+                                            {(provided) => (
+                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    item {i}
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                </ul>
+                            )}
+                        </Droppable>
                     </div>
                 </td>);
             }
