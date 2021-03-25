@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import DayBox from "./daybox";
 
 const MONTHS = [
     "January",
@@ -16,7 +17,12 @@ const MONTHS = [
     "December",
 ];
 const MONTHLENGTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const order = [1, 2, 3];
+const order = [
+    [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]],
+    [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]],
+    [[1, 2, 3], [4, 5, 6], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]],
+    [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]
+];
 
 function Upcoming () {
     const [oldOrder, newOrder] = useState(order);
@@ -75,30 +81,7 @@ function Upcoming () {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
-              weekContent.push(
-                <td className="day-cell" key={day}>
-                    <div className={"calendar-space" + ((date.getDate() === day) ? " calendar-space-today" : "")}>
-                        {day}
-                        <button className="add-card-button"> + </button>
-                        <div>
-                        <Droppable droppableId={"calendar-space-content-" + day + "-" + i}>
-                            {(provided) => (
-                                <ul className={"calendar-space-content" + day + "-" + i} {...provided.droppableProps} ref={provided.innerRef}>
-                                    {oldOrder.map((ind) => {
-                                        return (<Draggable key={"" + day + "-" + ind} draggableId={"" + day + "-" + ind} index={ind - 1}>
-                                            {(provided) => (
-                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                    item {ind}
-                                                </li>
-                                            )}
-                                        </Draggable>);
-                                    })}
-                                </ul>
-                            )}
-                        </Droppable>
-                        </div>
-                    </div>
-                </td>);
+              weekContent.push(<DayBox week={w} day={day} weekday={i} date={date}/>);
             }
             day++;
           }
