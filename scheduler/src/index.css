@@ -29,7 +29,7 @@ code {
 
 .calendar-header {
   width: 100%;
-  height: 10%;
+  height: 10vh;
   font-size: 40px;
   text-align: center;
 }
@@ -117,4 +117,63 @@ code {
   padding: 5px;
   margin: 5px;
   text-align: center;
+}
+
+.upcoming-body {
+  width: 80%;
+  height: 90%;
+  overflow-x: hidden;
+}
+
+.upcoming {
+  width: 100%;
+  border: none;
+}
+
+.calendar-space {
+  border-radius: 5px;
+  height: 21vh;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 0.5vh;
+  margin: 0.5vh;
+  text-align: left;
+  background-color: #444444;
+  transition: 0.2s;
+}
+
+.calendar-space:hover {
+  background-color: #e2a600;
+}
+
+.calendar-space-today {
+  background-color: #886a17;
+}
+
+.add-card-button {
+  float: right;
+  color: Transparent;
+  background-color: Transparent;
+  border: none;
+  padding-left: 4px;
+  padding-right: 4px;
+  transition: 0.2s;
+}
+
+.add-card-button:hover {
+  color: #e2a600;
+  background-color: #444444;
+}
+
+.card-area {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  padding: 1px;
+  margin: 2px 0px;
+  background-color: #dddddd !important;
+  color: #222222;
 }
