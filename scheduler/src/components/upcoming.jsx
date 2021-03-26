@@ -84,7 +84,7 @@ function Upcoming () {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
-              weekContent.push(<DayBox week={w} day={day} weekday={i} date={date}/>);
+              weekContent.push(<DayBox order={order} week={w} day={day} weekday={i} date={date}/>);
             }
             day++;
           }
