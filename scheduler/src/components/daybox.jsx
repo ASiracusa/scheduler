@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { v1 as timestamp } from 'uuid';
 
 function DayBox(props) {
   return (
@@ -11,11 +12,11 @@ function DayBox(props) {
           <Droppable droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
               {(provided) => (
                   <ul className={"calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
-                      {props.order[props.week][props.weekday].map((ind) => {
-                          return (<Draggable key={"" + props.day + "-" + ind} draggableId={"" + props.day + "-" + ind} index={ind - 1}>
+                      {props.order[props.week][props.weekday].map((val, ind) => {
+                          return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + ind} index={ind}>
                               {(provided) => (
                                   <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                      item {ind}
+                                      item {val}
                                   </li>
                               )}
                           </Draggable>);

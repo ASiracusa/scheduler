@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DayBox from "./daybox";
+import { v1 as timestamp } from 'uuid';
 
 const MONTHS = [
     "January",
@@ -84,7 +85,8 @@ function Upcoming () {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
-              weekContent.push(<DayBox order={order} week={w} day={day} weekday={i} date={date}/>);
+              const ts = timestamp();
+              weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date}/>);
             }
             day++;
           }
