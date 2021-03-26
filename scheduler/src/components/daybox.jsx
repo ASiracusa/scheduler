@@ -11,11 +11,11 @@ function DayBox(props) {
         <div>
           <Droppable droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
               {(provided) => (
-                  <ul className={"calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
+                  <ul className={"card-area calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
                       {props.order[props.week][props.weekday].map((val, ind) => {
                           return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + ind} index={ind}>
                               {(provided) => (
-                                  <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                  <li className="card" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                       item {val}
                                   </li>
                               )}

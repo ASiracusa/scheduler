@@ -164,3 +164,16 @@ code {
   color: #e2a600;
   background-color: #444444;
 }
+
+.card-area {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  padding: 1px;
+  margin: 2px 0px;
+  background-color: #dddddd !important;
+  color: #222222;
+}
