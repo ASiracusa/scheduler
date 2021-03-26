@@ -46,9 +46,12 @@ function Upcoming () {
         console.log(result);
         if (!result.destination) return;
 
+        const source = document.getElementsByClassName(result.source.droppableId)[0];
+        const destination = document.getElementsByClassName(result.destination.droppableId)[0];
+
         const items = Array.from(oldOrder);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
+        const [reorderedItem] = items[parseInt(source.getAttribute("week"))][parseInt(source.getAttribute("day"))].splice(result.source.index, 1);
+        items[parseInt(destination.getAttribute("week"))][parseInt(destination.getAttribute("day"))].splice(result.destination.index, 0, reorderedItem);
         newOrder(items);
     }
 

@@ -14,7 +14,7 @@ function DayBox(props) {
         <div>
           <Droppable droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
               {(provided) => (
-                  <ul className={"calendar-space-content" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef}>
+                  <ul className={"calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
                       {oldOrder.map((ind) => {
                           return (<Draggable key={"" + props.day + "-" + ind} draggableId={"" + props.day + "-" + ind} index={ind - 1}>
                               {(provided) => (
