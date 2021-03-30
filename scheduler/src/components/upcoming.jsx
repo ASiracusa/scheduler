@@ -86,7 +86,7 @@ function Upcoming () {
                 day = 1;
               }
               const ts = timestamp();
-              weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date}/>);
+              weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date} createCard={createCard}/>);
             }
             day++;
           }
@@ -100,6 +100,11 @@ function Upcoming () {
     function isLeapYear (year) {
         return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
     };
+
+    function createCard(row, column) {
+        console.log(row);
+        console.log(column);
+    }
 }
 
 export default Upcoming;
