@@ -102,8 +102,9 @@ function Upcoming () {
     };
 
     function createCard(row, column) {
-        console.log(row);
-        console.log(column);
+        const items = Array.from(oldOrder);
+        items[row][column].splice(items[row][column].length, 0, "0");
+        newOrder(items);
     }
 }
 
