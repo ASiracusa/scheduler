@@ -6,7 +6,9 @@ function Card(props) {
     return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
         {(provided) => (
             <li className="card" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                item {props.val}
+                <div contentEditable="true">
+                    item {props.val}
+                </div>
             </li>
         )}
     </Draggable>);
