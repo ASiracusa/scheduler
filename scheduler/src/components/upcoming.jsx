@@ -63,23 +63,22 @@ function Upcoming () {
         var day = Math.floor((date.getDate() + beginning.getDay() - 1) / 7) * 7 - beginning.getDay() + 1;
         var monthContent = [];
     
-        var daysInMonth =
-          date.getMonth() === 1 && isLeapYear(date.getFullYear())
-            ? 29
-            : MONTHLENGTHS[date.getMonth()];
+        var daysInLastMonth =
+          (day <= 0) ? 
+            ((date.getMonth() + 11) % 12 === 1 && isLeapYear(date.getFullYear())
+              ? 29
+              : MONTHLENGTHS[(date.getMonth() + 11) % 12])
+            : (date.getMonth() === 1 && isLeapYear(date.getFullYear())
+              ? 29
+              : MONTHLENGTHS[date.getMonth()]); 
     
         var schedule = [];
         for (var w = 0; w < 4; w++) {
           var weekContent = [];
           for (var i = 0; i < 7; i++) {
             if (day <= 0) {
-              weekContent.push(
-                <td className="day-cell" key={day}>
-                    <div className="calendar-space">
-                        {day}
-                        <button className="add-card-button"> + </button>
-                    </div>
-                </td>);
+              const ts = timestamp();
+              weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard}/>);
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
                 date.setMonth((date.getMonth() + 1) % 12);
