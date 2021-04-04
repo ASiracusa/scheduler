@@ -31,14 +31,14 @@ function Upcoming () {
     return (
         <React.Fragment>
             <DragDropContext onDragEnd={handleOnDragEnd}>
-            <div className="calendar-header">:)</div>
-                <div className="upcoming-body">
-                    <table className="upcoming" cellPadding="0">
-                        <tbody>
-                            {generateUpcomingDays()}
-                        </tbody>
-                    </table>
-                </div>
+              <div className="calendar-header">:)</div>
+              <div className="upcoming-body">
+                  <table className="upcoming" cellPadding="0">
+                      <tbody>
+                          {generateUpcomingDays()}
+                      </tbody>
+                  </table>
+              </div>
             </DragDropContext>
         </React.Fragment>
     );
