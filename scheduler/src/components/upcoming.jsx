@@ -53,9 +53,7 @@ function Upcoming () {
         const items = Array.from(oldOrder);
         const [reorderedItem] = items[parseInt(source.getAttribute("week"))][parseInt(source.getAttribute("day"))].splice(result.source.index, 1);
         items[parseInt(destination.getAttribute("week"))][parseInt(destination.getAttribute("day"))].splice(result.destination.index, 0, reorderedItem);
-        console.log("handling");
         newOrder(items);
-        console.log("handled");
     }
 
     function generateUpcomingDays () {
@@ -106,7 +104,6 @@ function Upcoming () {
         const items = Array.from(oldOrder);
         items[row][column].splice(items[row][column].length, 0, "0");
         newOrder(items);
-        console.log("created");
     }
 }
 

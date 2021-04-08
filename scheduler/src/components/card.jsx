@@ -13,7 +13,7 @@ function Card(props) {
 
     function createDesc (provided) {
         descTs = timestamp();
-        const descrTags = <li id={descTs} key={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} {...provided.draggableProps.style}>
+        const descrTags = <li id={descTs} key={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                         <div onClick={editDesc}>
                             item {props.val}
                         </div>

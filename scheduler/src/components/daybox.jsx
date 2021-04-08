@@ -10,11 +10,11 @@ function DayBox(props) {
         {props.day}
         <button className="add-card-button" onClick={() => {props.createCard(props.week, props.weekday)}}> + </button>
         <div>
-          <Droppable key={timestamp()} droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
+          <Droppable droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
               {(provided) => (
                   <ul className={"card-area calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
                       {props.order[props.week][props.weekday].map((val, ind) => {
-                          return <Card key={timestamp()} day={props.day} val={val} ind={ind}/>;
+                          return <Card day={props.day} val={val} ind={ind}/>;
                       })}
                   </ul>
               )}
