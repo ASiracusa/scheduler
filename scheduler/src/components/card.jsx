@@ -3,32 +3,31 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v1 as timestamp } from 'uuid';
 
 function Card(props) {
-    var descTs;
+    var descr;
 
-    return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
+    return (<Draggable onmouseout={saveDesc} key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
         {(provided) => (
             createDesc(provided)
         )}
     </Draggable>);
 
     function createDesc (provided) {
-        descTs = timestamp();
-        const descrTags = <li id={descTs} key={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <div onClick={editDesc}>
-                            item {props.val}
-                        </div>
-                    </li>;
-        return (descrTags);
+        descr = <li className="card" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <div onClick={editDesc}>
+                        item {props.val}
+                    </div>
+                </li>;
+        return (
+            descr
+        );
     }
 
     function editDesc () {
-        document.getElementById(descTs).setAttribute("contentEditable", "true");
-        console.log("Edit");
+        console.log("edit");
     }
 
     function saveDesc () {
-        document.getElementById(descTs).setAttribute("contentEditable", "false");
-        console.log("Save");
+        console.log("save");
     }
 }
 
