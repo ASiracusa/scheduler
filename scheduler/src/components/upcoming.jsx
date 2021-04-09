@@ -108,6 +108,13 @@ function Upcoming () {
         newOrder(items);
         console.log("created");
     }
+
+    function editCardDesc(row, column, index, newContent) {
+      const items = Array.from(oldOrder);
+      items[row][column][index] = newContent;
+      newOrder(items);
+      console.log("edited desc");
+    }
 }
 
 export default Upcoming;
