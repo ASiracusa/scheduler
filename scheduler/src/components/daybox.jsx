@@ -14,7 +14,7 @@ function DayBox(props) {
               {(provided) => (
                   <ul className={"card-area calendar-space-content-" + props.day + "-" + props.weekday} {...provided.droppableProps} ref={provided.innerRef} day={props.weekday} week={props.week}>
                       {props.order[props.week][props.weekday].map((val, ind) => {
-                          return <Card key={timestamp()} day={props.day} val={val} ind={ind}/>;
+                          return <Card key={timestamp()} day={props.day} val={val} ind={ind} editCardDesc={editCardDesc}/>;
                       })}
                   </ul>
               )}
@@ -23,6 +23,10 @@ function DayBox(props) {
       </div>
     </td>
   );
+
+  function editCardDesc (index, newDesc) {
+    props.editCardDesc(props.week, props.weekday, index, newDesc);
+  }
 }
 
 export default DayBox;

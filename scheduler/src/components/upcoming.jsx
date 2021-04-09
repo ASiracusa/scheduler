@@ -80,14 +80,14 @@ function Upcoming () {
           for (var i = 0; i < 7; i++) {
             if (day <= 0) {
               const ts = timestamp();
-              weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard}/>);
+              weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
               const ts = timestamp();
-              weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date} createCard={createCard}/>);
+              weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
             }
             day++;
           }

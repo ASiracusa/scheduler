@@ -4,6 +4,7 @@ import { v1 as timestamp } from 'uuid';
 
 function Card(props) {
     var descTs;
+    var descDivTs;
 
     return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
         {(provided) => (
@@ -13,11 +14,12 @@ function Card(props) {
 
     function createDesc (provided) {
         descTs = timestamp();
+        descDivTs = timestamp();
         const descrTags = <li id={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} {...provided.draggableProps.style}>
-                        <div onClick={editDesc}>
-                            item {props.val}
-                        </div>
-                    </li>;
+            <div id={descDivTs} onClick={editDesc}>
+                {props.val}
+            </div>
+        </li>;
         return (descrTags);
     }
 
@@ -28,6 +30,7 @@ function Card(props) {
 
     function saveDesc () {
         document.getElementById(descTs).setAttribute("contentEditable", "false");
+        props.editCardDesc(props.ind, document.getElementById(descDivTs).innerText);
         console.log("Save");
     }
 }
