@@ -7,8 +7,10 @@ function DayBox(props) {
   return (
     <td className="day-cell" key={props.day}>
       <div className={"calendar-space" + ((props.date.getDate() === props.day) ? " calendar-space-today" : "")}>
-        {props.day}
-        <button className="add-card-button" onClick={() => {props.createCard(props.week, props.weekday)}}> + </button>
+        <div>
+          {props.day}
+          <button className="add-card-button" onClick={() => {props.createCard(props.week, props.weekday)}}> + </button>
+        </div>
         <div>
           <Droppable key={timestamp()} droppableId={"calendar-space-content-" + props.day + "-" + props.weekday}>
               {(provided) => (
