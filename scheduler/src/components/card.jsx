@@ -16,8 +16,15 @@ function Card(props) {
         descTs = timestamp();
         descDivTs = timestamp();
         const descrTags = <li id={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} {...provided.draggableProps.style}>
-            <div id={descDivTs} onClick={editDesc}>
-                {props.val}
+            <div className="card-flex">
+                <div className="checkbox-area">
+                    <button className="checkbox-button">
+                        o
+                    </button>
+                </div>
+                <div className="card-desc" id={descDivTs} onClick={editDesc}>
+                    {props.val}
+                </div>
             </div>
         </li>;
         return (descrTags);
