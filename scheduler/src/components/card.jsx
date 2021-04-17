@@ -19,7 +19,7 @@ function Card(props) {
             <div className="card-flex">
                 <div className="checkbox-area">
                     <button className="checkbox-button">
-                        o
+                        
                     </button>
                 </div>
                 <div className="card-desc" id={descDivTs} onClick={editDesc}>

@@ -187,7 +187,7 @@ code {
 
 .checkbox-area {
   background-color: #ffce49 !important;
-  width: 3rem;
+  width: 2rem;
   border-radius: 4px 0px 0px 4px !important;
   border: 0px !important;
   text-align: center;
@@ -207,4 +207,5 @@ code {
   border-radius: 4px !important;
   border: 0px !important;
   margin: 2px 4px;
+  width: 5rem;
 }
