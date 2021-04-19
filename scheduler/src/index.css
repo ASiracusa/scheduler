@@ -144,11 +144,11 @@ code {
 }
 
 .calendar-space:hover {
-  background-color: #e2a600;
+  background-color: #888888;
 }
 
 .calendar-space-today {
-  background-color: #886a17;
+  background-color: #666666;
 }
 
 .add-card-button {
@@ -175,7 +175,7 @@ code {
 
 .card {
   margin: 2px 0px;
-  background-color: #dddddd !important;
+  background-color: #ffffff !important;
   color: #222222;
   border-radius: 4px !important;
   border: 0px !important;
@@ -186,7 +186,7 @@ code {
 }
 
 .checkbox-area {
-  background-color: #ffce49 !important;
+  background-color: #ecad00 !important;
   width: 2rem;
   border-radius: 4px 0px 0px 4px !important;
   border: 0px !important;
@@ -194,12 +194,18 @@ code {
 }
 
 .checkbox-button {
-  background-color: #dddddd !important;
+  background-color: #ffffff !important;
   border: none;
   width: 1rem;
   height: 1rem;
   text-align: center;
   margin: 2px 2px;
+  border-radius: 4px !important;
+  transition: 0.2s;
+}
+
+.checkbox-button:active {
+  background-color: #ecad00 !important;
 }
 
 .card-desc {
