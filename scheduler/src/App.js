@@ -10,7 +10,11 @@ class App extends Component {
     return (
       <React.Fragment>
         <div className="page-setup">
-          <nav className="sidebar-shell">Contents</nav>
+          <nav className="sidebar-shell">
+            <button id="save-json-btn">
+              Save JSON
+            </button>
+          </nav>
           <Upcoming />
         </div>
       </React.Fragment>
