@@ -62,9 +62,8 @@ function Upcoming () {
         var date = new Date();
         var beginning = new Date();
         beginning.setDate(1);
+
         var day = Math.floor((date.getDate() + beginning.getDay() - 1) / 7) * 7 - beginning.getDay() + 1;
-        var monthContent = [];
-    
         var daysInLastMonth =
           (day <= 0) ? 
             ((date.getMonth() + 11) % 12 === 1 && isLeapYear(date.getFullYear())
@@ -75,20 +74,24 @@ function Upcoming () {
               : MONTHLENGTHS[date.getMonth()]); 
     
         var schedule = [];
+        
         for (var w = 0; w < 4; w++) {
           var weekContent = [];
+
           for (var i = 0; i < 7; i++) {
+
+            const ts = timestamp();
+
             if (day <= 0) {
-              const ts = timestamp();
               weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
-              const ts = timestamp();
               weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
             }
+            
             day++;
           }
     
@@ -106,14 +109,12 @@ function Upcoming () {
         const items = Array.from(oldOrder);
         items[row][column].splice(items[row][column].length, 0, "0");
         newOrder(items);
-        console.log("created");
     }
 
     function editCardDesc(row, column, index, newContent) {
       const items = Array.from(oldOrder);
       items[row][column][index] = newContent;
       newOrder(items);
-      console.log("edited desc");
     }
 }
 
