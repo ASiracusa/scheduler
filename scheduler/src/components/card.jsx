@@ -3,42 +3,47 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { v1 as timestamp } from 'uuid';
 
 function Card(props) {
-    var descTs;
-    var descDivTs;
+    const cardTs = timestamp();
+    const descTs = timestamp();
+    const checkboxTs = timestamp();
+    var completed = false;
 
     return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
         {(provided) => (
-            createDesc(provided)
+            <li id={cardTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} {...provided.draggableProps.style}>
+                <div className="card-flex">
+                    <div className="checkbox-area">
+                        <button className="checkbox-button" id={checkboxTs} onClick={toggleCompletion}>
+                            
+                        </button>
+                    </div>
+                    <div className="card-desc" id={descTs} onClick={editDesc}>
+                        {props.val}
+                    </div>
+                </div>
+            </li>
         )}
     </Draggable>);
 
-    function createDesc (provided) {
-        descTs = timestamp();
-        descDivTs = timestamp();
-        const descrTags = <li id={descTs} className="card" onMouseOut={saveDesc} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} {...provided.draggableProps.style}>
-            <div className="card-flex">
-                <div className="checkbox-area">
-                    <button className="checkbox-button">
-                        
-                    </button>
-                </div>
-                <div className="card-desc" id={descDivTs} onClick={editDesc}>
-                    {props.val}
-                </div>
-            </div>
-        </li>;
-        return (descrTags);
-    }
-
     function editDesc () {
-        document.getElementById(descTs).setAttribute("contentEditable", "true");
+        document.getElementById(cardTs).setAttribute("contentEditable", "true");
         console.log("Edit");
     }
 
     function saveDesc () {
-        document.getElementById(descTs).setAttribute("contentEditable", "false");
-        props.editCardDesc(props.ind, document.getElementById(descDivTs).innerText);
+        document.getElementById(cardTs).setAttribute("contentEditable", "false");
+        props.editCardDesc(props.ind, document.getElementById(descTs).innerText);
         console.log("Save");
+    }
+
+    function toggleCompletion () {
+        if (completed){
+            document.getElementById(checkboxTs).classList.remove("checkbox-button-done");
+        } else {
+            document.getElementById(checkboxTs).classList.add("checkbox-button-done");
+        }
+
+        completed = !completed;
     }
 }
 

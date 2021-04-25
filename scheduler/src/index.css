@@ -185,6 +185,10 @@ button {
   background-color: #ecad00 !important;
 }
 
+.checkbox-button-done {
+  background-color: #ecad00 !important;
+}
+
 .card-desc {
   flex-grow: 1;
   border-radius: 4px !important;
