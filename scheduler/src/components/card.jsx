@@ -6,7 +6,7 @@ function Card(props) {
     const cardTs = timestamp();
     const descTs = timestamp();
     const checkboxTs = timestamp();
-    var completed = false;
+    const [completed, setCompleted] = useState(false);
 
     return (<Draggable key={timestamp()} draggableId={"" + props.day + "-" + props.ind} index={props.ind}>
         {(provided) => (
@@ -31,7 +31,7 @@ function Card(props) {
     }
 
     function saveDesc () {
-        document.getElementById(cardTs).setAttribute("contentEditable", "false");
+        // document.getElementById(cardTs).setAttribute("contentEditable", "false");
         props.editCardDesc(props.ind, document.getElementById(descTs).innerText);
         console.log("Save");
     }
@@ -43,7 +43,7 @@ function Card(props) {
             document.getElementById(checkboxTs).classList.add("checkbox-button-done");
         }
 
-        completed = !completed;
+        setCompleted(false);
     }
 }
 

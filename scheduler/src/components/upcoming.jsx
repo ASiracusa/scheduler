@@ -27,6 +27,7 @@ const order = [
 
 function Upcoming () {
     const [oldOrder, newOrder] = useState(order);
+    const dayDateDict = {};
     
     return (
         <React.Fragment>
@@ -84,12 +85,14 @@ function Upcoming () {
 
             if (day <= 0) {
               weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
+              dayDateDict[[day, date.getMonth() + 1, date.getFullYear()]] = [w, i];
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
                 date.setMonth((date.getMonth() + 1) % 12);
                 day = 1;
               }
               weekContent.push(<DayBox key={ts} order={order} week={w} day={day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
+              dayDateDict[[day, date.getMonth() + 1, date.getFullYear()]] = [w, i];
             }
             
             day++;
@@ -98,6 +101,8 @@ function Upcoming () {
           schedule.push(<tr key={w}>{weekContent}</tr>);
         }
 
+        console.log(dayDateDict);
+        console.log(Object.keys(dayDateDict).length);
         return schedule;
     }
 
