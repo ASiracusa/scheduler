@@ -85,7 +85,7 @@ function Upcoming () {
 
             if (day <= 0) {
               weekContent.push(<DayBox key={ts} order={order} week={w} day={daysInLastMonth + day} weekday={i} date={date} createCard={createCard} editCardDesc={editCardDesc}/>);
-              dayDateDict[[day, date.getMonth() + 1, date.getFullYear()]] = [w, i];
+              dayDateDict[[daysInLastMonth + day, date.getMonth(), date.getFullYear()]] = [w, i];
             } else {
               if (day > MONTHLENGTHS[date.getMonth()]) {
                 date.setMonth((date.getMonth() + 1) % 12);
