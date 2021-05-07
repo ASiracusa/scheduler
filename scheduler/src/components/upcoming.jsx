@@ -25,7 +25,7 @@ const order = [
     [[], [], [], [], [], [], []]
 ];
 
-function Upcoming () {
+function Upcoming (props) {
     const [oldOrder, newOrder] = useState(order);
     const dayDateDict = {};
     
@@ -114,12 +114,14 @@ function Upcoming () {
         const items = Array.from(oldOrder);
         items[row][column].splice(items[row][column].length, 0, "0");
         newOrder(items);
+        props.updateUpcoming(items);
     }
 
     function editCardDesc(row, column, index, newContent) {
-      const items = Array.from(oldOrder);
-      items[row][column][index] = newContent;
-      newOrder(items);
+        const items = Array.from(oldOrder);
+        items[row][column][index] = newContent;
+        newOrder(items);
+        props.updateUpcoming(items);
     }
 }
 
