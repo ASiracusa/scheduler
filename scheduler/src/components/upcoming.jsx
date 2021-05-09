@@ -129,12 +129,12 @@ function Upcoming (props) {
     function saveUpcoming() {
       for (var w = 0; w < 4; w++) {
         for (var d = 0; d < 7; d++) {
-          // const dateStr = Object.keys(oldOrder).find(key => oldOrder[key] === [w, d]);
           const dateStr = Object.keys(dayDateDict).find(key => dayDateDict[key][0] === w && dayDateDict[key][1] === d);
           for (var c = 0; c < oldOrder[w][d].length; c++) {
-            console.log([w, d] === [w, d])
-            console.log([w, d]);
             console.log(dateStr);
+            const dss = dateStr.split(",");
+            const cardJSON = JSON.stringify({ "date": dss[0], "month": dss[1], "year": dss[2] });
+            console.log(cardJSON);
           }
         }
       }
