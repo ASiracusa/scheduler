@@ -32,7 +32,11 @@ function Upcoming (props) {
     return (
         <React.Fragment>
             <DragDropContext onDragEnd={handleOnDragEnd}>
-              <div className="calendar-header">:)</div>
+              <div className="calendar-header">
+                <button id="save-json-btn" onClick={saveUpcoming}>
+                  Save JSON
+                </button>
+              </div>
               <div className="upcoming-body">
                   <table className="upcoming" cellPadding="0">
                       <tbody>
@@ -114,14 +118,26 @@ function Upcoming (props) {
         const items = Array.from(oldOrder);
         items[row][column].splice(items[row][column].length, 0, "0");
         newOrder(items);
-        props.updateUpcoming(items);
     }
 
     function editCardDesc(row, column, index, newContent) {
         const items = Array.from(oldOrder);
         items[row][column][index] = newContent;
         newOrder(items);
-        props.updateUpcoming(items);
+    }
+
+    function saveUpcoming() {
+      for (var w = 0; w < 4; w++) {
+        for (var d = 0; d < 7; d++) {
+          // const dateStr = Object.keys(oldOrder).find(key => oldOrder[key] === [w, d]);
+          const dateStr = Object.keys(dayDateDict).find(key => dayDateDict[key][0] === w && dayDateDict[key][1] === d);
+          for (var c = 0; c < oldOrder[w][d].length; c++) {
+            console.log([w, d] === [w, d])
+            console.log([w, d]);
+            console.log(dateStr);
+          }
+        }
+      }
     }
 }
 
