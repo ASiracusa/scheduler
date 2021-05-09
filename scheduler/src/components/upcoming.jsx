@@ -133,7 +133,7 @@ function Upcoming (props) {
           for (var c = 0; c < oldOrder[w][d].length; c++) {
             console.log(dateStr);
             const dss = dateStr.split(",");
-            const cardJSON = JSON.stringify({ "date": dss[0], "month": dss[1], "year": dss[2] });
+            const cardJSON = JSON.stringify({ "desc": oldOrder[w][d][c], "date": dss[0], "month": dss[1], "year": dss[2] });
             console.log(cardJSON);
           }
         }
