@@ -122,20 +122,22 @@ function Upcoming (props) {
     }
 
     function saveUpcoming() {
-      var cardsJSON = "{\"cards\":[";
+      var cardsPreJSON = "{\"cards\":[";
       for (var w = 0; w < 4; w++) {
         for (var d = 0; d < 7; d++) {
           const dateStr = Object.keys(dayDateDict).find(key => dayDateDict[key][0] === w && dayDateDict[key][1] === d);
           for (var c = 0; c < oldOrder[w][d].length; c++) {
             const dss = dateStr.split(",");
-            const cardJSON = JSON.stringify({ "desc": oldOrder[w][d][c], "date": dss[0], "month": dss[1], "year": dss[2] });
-            console.log(cardJSON);
-            cardsJSON += cardJSON + ","
+            const cardPreJSON = JSON.stringify({ "desc": oldOrder[w][d][c], "date": dss[0], "month": dss[1], "year": dss[2] });
+            console.log(cardPreJSON);
+            cardsPreJSON += cardPreJSON + ","
           }
         }
       }
-      cardsJSON += "]}";
-      console.log(cardsJSON);
+      cardsPreJSON += "]}";
+      console.log(cardsPreJSON);
+        
+      var cardsJSON = JSON.parse(cardsPreJSON);
     }
 }
 
